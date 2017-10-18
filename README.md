@@ -23,6 +23,8 @@ It also creates a retry thread and queue. These are in case an email send fails 
 
 The retry thread is a reduced implementation of a threadpool - which in a real solution would wait on the queue for emails to re-send.
 
+**configuration:**
+Obviously the Application should get its API keys from a configuration file, but I don't know Java well enough yet to implement best practices in Application configuration so I just hard-coded the API keys in.
 
 
 **USAGE:**
