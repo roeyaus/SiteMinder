@@ -87,9 +87,11 @@ Testing covers input validation, 3rd party provider integration, response codes 
 
 
 
-*How to run:*
+*Where it is / How to run:*
 
-Get project from Git, open in IntelliJ IDEA, import as Maven project, run.
+Get project from Git : https://github.com/roeyaus/SiteMinder
+
+open in IntelliJ IDEA, import as Maven project, run.
 
 *Where to test : *
 
