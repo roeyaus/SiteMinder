@@ -25,10 +25,15 @@ User calls WebserviceURL/sendEmail with POST and JSON body with the following st
 {"to":["roeyaus@gmail.com"], "cc": ["roeyaus@gmail.com"], "bcc" : ["roeyaus@gmail.com"], "subject" : "1121", "from":"me@me.com", "text" : "blablabla"}
 
 The service receives the HTTP request and parse the body to a Java class.
+
 The service defers the request to a threadpool using Java mechanisms (NOT IMPLEMENTED)
+
 The service saves the email immediately to DynamoDB  and gets a unique id for it (NOT IMPLEMENTED)
+
 The service tries the first provider, and if receives a response other than 200 or 400 (invalid arguments), it tries the next and so on.
+
 If ALL providers have failed, it saves the email to the retry queue to be retried by the thread.
+
 (Had I implemented DynamoDB integration - the blocking queue would not have been needed.)
 
 *Dataloss:*
@@ -59,7 +64,9 @@ When delivery is confirmed (200 status returned from Provider), they are deleted
    Thus we wait for a "200" response from any service before pronouncing the email as "sent" and returning a response.
 
 *Input validation:*
+
 I should validate email addresses before sending to the service - but I didn't get around to it (NOT IMPLEMENTED)
+
 I validate emails multiple times for From/To fields, and return an error to the user if they are missing, or if any other critical fields are missing (if one of the providers said so).
 
 *Error Handling:*
