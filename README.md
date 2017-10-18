@@ -59,8 +59,8 @@ When delivery is confirmed (200 status returned from Provider), they are deleted
    Thus we wait for a "200" response from any service before pronouncing the email as "sent" and returning a response.
 
 *Input validation:*
-
-We validate emails multiple times for From/To fields, and return an error to the user if they are missing, or if any other critical fields are missing (if one of the providers said so).
+I should validate email addresses before sending to the service - but I didn't get around to it (NOT IMPLEMENTED)
+I validate emails multiple times for From/To fields, and return an error to the user if they are missing, or if any other critical fields are missing (if one of the providers said so).
 
 *Error Handling:*
 
