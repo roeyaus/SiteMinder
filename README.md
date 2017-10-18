@@ -6,7 +6,9 @@ If the default 3rd party service returns an error, it tries the rest in order.
 
 Keep is mind I am not and never have been a Java developer an I essentially learned both the language and the IDE/frameworks for this exercise.
 
-My implementation is as follows :
+**Also - I could NOT get SendGrid to send emails - I always got 400 error with any request.**
+
+My implementation :
 
 **Frameworks/Libraries :**
 
@@ -16,8 +18,12 @@ Jersey HTTP Client for my HTTP
 
 **Initialization:**
 Application loads and creates the webservice and "Dispatchers" for each 3rd party provider.
+
 It also creates a retry thread and queue. These are in case an email send fails on ALL services, it must be retried until it succeeds.
+
 The retry thread is a reduced implementation of a threadpool - which in a real solution would wait on the queue for emails to re-send.
+
+
 
 **USAGE:**
 User calls WebserviceURL/sendEmail with POST and JSON body with the following structure :
