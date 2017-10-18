@@ -8,22 +8,23 @@ Keep is mind I am not and never have been a Java developer an I essentially lear
 
 My implementation is as follows :
 
-Frameworks/Libraries :
+**Frameworks/Libraries :**
 
-I am using SpringBoot MVC as a webserver
+I am using SpringBoot MVC as a webserver, 
 Jersey HTTP Client for my HTTP
 
 
-*Initialization:*
+**Initialization:**
 Application loads and creates the webservice and "Dispatchers" for each 3rd party provider.
 It also creates a retry thread and queue. These are in case an email send fails on ALL services, it must be retried until it succeeds.
 The retry thread is a reduced implementation of a threadpool - which in a real solution would wait on the queue for emails to re-send.
 
-*Use:*
+**USAGE:**
 User calls WebserviceURL/sendEmail with POST and JSON body with the following structure :
 
-{"to":["roeyaus@gmail.com"], "cc": ["roeyaus@gmail.com"], "bcc" : ["roeyaus@gmail.com"], "subject" : "1121", "from":"me@me.com", "text" : "blablabla"}
+{ "to":["Email1", "Email2", "Email3", ...], "cc": ["Email1", "Email2", "Email3",...], "bcc" : ["Email1", "Email2", "Email3", ...], "subject" : "blabla", "from":"Email", "text" : "blablabla" }
 
+**Flow:**
 The service receives the HTTP request and parse the body to a Java class.
 
 The service defers the request to a threadpool using Java mechanisms (NOT IMPLEMENTED)
@@ -36,7 +37,7 @@ If ALL providers have failed, it saves the email to the retry queue to be retrie
 
 (Had I implemented DynamoDB integration - the blocking queue would not have been needed.)
 
-*Dataloss:*
+**Dataloss:**
 Where can dataloss occur?
 
 1) dataloss can occur if the webservice machine dies for any reason, his email is lost unless already delivered.
@@ -63,13 +64,13 @@ When delivery is confirmed (200 status returned from Provider), they are deleted
 3) Dataloss can occured if we delete the emails before we receive confirmation that the emails have gone through.
    Thus we wait for a "200" response from any service before pronouncing the email as "sent" and returning a response.
 
-*Input validation:*
+**Input validation:**
 
 I should validate email addresses before sending to the service - but I didn't get around to it (NOT IMPLEMENTED)
 
 I validate emails multiple times for From/To fields, and return an error to the user if they are missing, or if any other critical fields are missing (if one of the providers said so).
 
-*Error Handling:*
+**Error Handling:**
 
 The user gets the following responses:
 
@@ -81,19 +82,19 @@ The user gets the following responses:
 
 500 error - if an unknown error has occured (exception in our application)
 
-*Testing:*
+**Testing:**
 
 Testing covers input validation, 3rd party provider integration, response codes etc.
 
 
 
-*Where it is / How to run:*
+**Where it is / How to run:**
 
 Get project from Git : https://github.com/roeyaus/SiteMinder
 
 open in IntelliJ IDEA, import as Maven project, run.
 
-*Where to test : *
+**Where to test : **
 
 I put it on an EC2 instance :
 
