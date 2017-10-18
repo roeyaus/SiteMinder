@@ -41,8 +41,11 @@ We must write it to a DB for safekeeping until delivery is confirmed
 Thus the DB implementation would be as such : (Not Implemented)
 
 When the service loads it checks the DB for unsent emails (probably saved from when the service died last time)
+
 It then allocates several threads to sending these emails.
+
 At the same time it starts receiving new requests - which it writes to DB immediately pending delivery.
+
 When delivery is confirmed (200 status returned from Provider), they are deleted from DB
 
 ** For a quick/Dirty/expensive solution I would go with Amazon DynamoDB but it would take me way too long to implement.
@@ -62,9 +65,13 @@ We validate emails multiple times for From/To fields, and return an error to the
 *Error Handling:*
 
 The user gets the following responses:
+
 200 mail was sent successfully through any provider
+
 201 mail is successfully received but NOT YET SENT - deferred for later sending (If all providers are down for example)
+
 400 invalid argument - missing to/from fields or any other error.
+
 500 error - if an unknown error has occured (exception in our application)
 
 *Testing:*
