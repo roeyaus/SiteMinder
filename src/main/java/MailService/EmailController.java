@@ -46,29 +46,23 @@ public class EmailController implements Runnable{
                 ClientResponse response = _dispatcherList.get(currentDispatcher).Dispatch(
                         emailRequest);
 
-            if (response.getStatus() != 400 && response.getStatus() != 200) {
-                //dispatcher failed because service has a problem, increment the current dispatcher and try again
-               currentDispatcher++;
-               if (currentDispatcher == _dispatcherList.size()) //no more dispatchers left
-               {
-                   try {
-                       _emailQueue.put(emailRequest);
-                   } catch (InterruptedException e) {
-                       e.printStackTrace();
-                   }
-                   return ResponseEntity.status(HttpStatus.CREATED).body(new EmailRequestResult(201, "email request has been queued"));
-               }
+                if (response.getStatus() == 200) {
+                    mailSent = true;
+                } else if (response.getStatus() == 400) {
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new EmailRequestResult(400, "Bad arguments/parameters"));
+                } else {
+                    currentDispatcher++;
+                    if (currentDispatcher == _dispatcherList.size()) //no more dispatchers left
+                    {
+                        try {
+                            _emailQueue.put(emailRequest);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        return ResponseEntity.status(HttpStatus.CREATED).body(new EmailRequestResult(201, "email request has been queued"));
+                    }
 
-            }
-            if (response.getStatus() == 200) {
-                mailSent = true;
-                String output = response.getEntity(String.class);
-                System.out.println(output);
-
-            }
-            else {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new EmailRequestResult(400, "Bad arguments/parameters"));
-            }
+                }
             }
             catch (IllegalArgumentException exception)
             {

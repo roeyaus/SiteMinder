@@ -59,6 +59,6 @@ public class EmailRequest {
     }
 
     boolean isEmailRequestValid() {
-        return (to.size() > 0 && from != "");
+        return (to != null && to.size() > 0 && from != "");
     }
 }

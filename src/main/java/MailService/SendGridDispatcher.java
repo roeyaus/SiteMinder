@@ -28,8 +28,7 @@ public class SendGridDispatcher extends ProviderDispatcher {
         }
         Client client = Client.create();
         WebResource webResource = client.resource("https://api.sendgrid.com/v3/mail/send");
-        /* SGParameters sgp = new SGParameters(new SGPersonalization(Arrays.asList(new SGEmailObject("1")), Arrays.asList(new SGEmailObject("2")), Arrays.asList(new SGEmailObject("3"))),
-              new SGFromParameter("4"), "5", "6"  );*/
+
         return webResource.type(MediaType.APPLICATION_JSON_TYPE).header("Authorization", "Bearer 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")
                 .header("Content-Type", "application/json").post(ClientResponse.class,
                         "{'personalizations': [['to': [{'email': 'test@example.com'}]}], 'from': {'email': 'test@example.com'},'subject': 'Sending with SendGrid is Fun','content': [{'type': 'text/plain', 'value': " +

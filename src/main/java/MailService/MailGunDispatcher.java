@@ -22,7 +22,7 @@ public class MailGunDispatcher extends ProviderDispatcher {
             throw new IllegalArgumentException("Email Request invalid - Missing To/From fields");
         }
         Client client = Client.create();
-        client.addFilter(new HTTPBasicAuthFilter("api", "key-d6bb3200b365a615532a261723374ec6"));
+        client.addFilter(new HTTPBasicAuthFilter("api", "key-378a4f43b73d30331480c1982009129a"));
         WebResource webResource = client.resource("https://api.mailgun.net/v3/sandbox401dbe4a8e9444d38dc1b54b00c5949b.mailgun.org/messages");
         MultivaluedMapImpl formData = new MultivaluedMapImpl();
         formData.add("from", emailRequest.from);
@@ -30,7 +30,7 @@ public class MailGunDispatcher extends ProviderDispatcher {
         for (String t: emailRequest.to)
         {
             sb.append(t);
-            //sb.append(",");
+            sb.append(",");
 
         }
 
@@ -39,14 +39,14 @@ public class MailGunDispatcher extends ProviderDispatcher {
         for (String t: emailRequest.cc)
         {
             sb.append(t);
-           // sb.append(",");
+            sb.append(",");
         }
         formData.add("cc", sb.toString());
         sb = new StringBuilder();
         for (String t: emailRequest.bcc)
         {
             sb.append(t);
-           // sb.append(",");
+            sb.append(",");
 
         }
         formData.add("bcc", sb.toString());
