@@ -47,6 +47,15 @@ public class EmailControllerTests {
     }
 
     @Test
+    public void invalidEmailAddressShouldReturnBadRequest() throws Exception {
+
+        //THIS SHOULD BE VALIDATED IN THE APPLICATION - BUT IT'S NOT.
+
+        this.mockMvc.perform(post("/sendEmail").contentType(MediaType.APPLICATION_JSON)
+                .content("{\"to\":[\"roeyaus@gmom\"], \"cc\": [\"roeyaus@gmail.com\"], \"bcc\" : [\"roeyaus@gmail.com\"], \"subject\" : \"1121\", \"text\" : \"blablabla\"}")).andDo(print()).andExpect(status().isBadRequest());
+    }
+
+    @Test
     public void EmailWithoutFromShouldReturnBadRequest() throws Exception {
 
         this.mockMvc.perform(post("/sendEmail").contentType(MediaType.APPLICATION_JSON)
@@ -61,5 +70,37 @@ public class EmailControllerTests {
                 .content("{\"cc\": [\"roeyaus@gmail.com\"], \"bcc\" : [\"roeyaus@gmail.com\"], \"subject\" : \"1121\", \"from\":\"me@me.com\", \"text\" : \"blablabla\"}")).andDo(print()).andExpect(status().isBadRequest());
 
     }
+
+    @Test
+    public void EmailWithMultipleRecepientsShouldReturnOK() throws Exception {
+
+        this.mockMvc.perform(post("/sendEmail").contentType(MediaType.APPLICATION_JSON)
+                .content("{\"to\":[\"roeyaus@gmail.com\", \"roey.lehman@eyesight-tech.com\"], \"cc\": [\"roeyaus@gmail.com\"], \"bcc\" : [\"roeyaus@gmail.com\"], \"subject\" : \"1121\", \"from\":\"me@me.com\", \"text\" : \"blablabla\"}")).andDo(print()).andExpect(status().isOk());
+
+    }
+
+    @Test
+    public void EmailWithoutCCReturnsOK() throws Exception {
+
+        this.mockMvc.perform(post("/sendEmail").contentType(MediaType.APPLICATION_JSON)
+                .content("{\"to\":[\"roeyaus@gmail.com\"], \"bcc\" : [\"roeyaus@gmail.com\"], \"subject\" : \"1121\", \"from\":\"me@me.com\", \"text\" : \"blablabla\"}")).andDo(print()).andExpect(status().isOk());
+
+    }
+
+    @Test
+    public void EmailWithoutBCCReturnsOK() throws Exception {
+
+        this.mockMvc.perform(post("/sendEmail").contentType(MediaType.APPLICATION_JSON)
+                .content("{\"to\":[\"roeyaus@gmail.com\"], \"cc\" : [\"roeyaus@gmail.com\"], \"subject\" : \"1121\", \"from\":\"me@me.com\", \"text\" : \"blablabla\"}")).andDo(print()).andExpect(status().isOk());
+    }
+
+    @Test
+    public void EmailWithoutSubjectReturnsOK() throws Exception {
+
+        this.mockMvc.perform(post("/sendEmail").contentType(MediaType.APPLICATION_JSON)
+                .content("{\"to\":[\"roeyaus@gmail.com\"], \"cc\" : [\"roeyaus@gmail.com\"], \"bcc\" : [\"roeyaus@gmail.com\"], \"from\":\"me@me.com\", \"text\" : \"blablabla\"}")).andDo(print()).andExpect(status().isOk());
+    }
+
+
 
 }

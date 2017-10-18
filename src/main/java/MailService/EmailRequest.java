@@ -1,9 +1,16 @@
 package MailService;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class EmailRequest {
-    java.util.List<String> to;
+    public EmailRequest() {
+        cc = new LinkedList<>();
+        bcc = new LinkedList<>();
+        to = new LinkedList<>();
+    }
+
+    List<String> to;
     List<String> cc;
     List<String> bcc;
     String from;

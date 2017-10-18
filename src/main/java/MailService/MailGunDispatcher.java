@@ -41,7 +41,10 @@ public class MailGunDispatcher extends ProviderDispatcher {
             sb.append(t);
             sb.append(",");
         }
-        formData.add("cc", sb.toString());
+        if (sb.length() > 0)
+        {
+            formData.add("cc", sb.toString());
+        }
         sb = new StringBuilder();
         for (String t: emailRequest.bcc)
         {
@@ -49,7 +52,9 @@ public class MailGunDispatcher extends ProviderDispatcher {
             sb.append(",");
 
         }
-        formData.add("bcc", sb.toString());
+        if (sb.length() > 0) {
+            formData.add("bcc", sb.toString());
+        }
         formData.add("subject", emailRequest.subject);
         formData.add("text", emailRequest.text);
         return webResource.type(MediaType.APPLICATION_FORM_URLENCODED).post(ClientResponse.class, formData);
