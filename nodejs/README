@@ -22,6 +22,11 @@ Unirest for HTTP requests
 Mocha and assertion for testing
 Validator for email validation
 
+Missing Tests :
+
+I didn't get around to testing mailGun fail and fallback on sendgrid - because sendgrid account is disabled. 
+I didn't get around to testing the 201 return code - if both services fail, becuase there is no implementation for it (needs the above job processor)
+
 
 How to run : 
 
