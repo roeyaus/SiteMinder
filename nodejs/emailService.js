@@ -5,7 +5,7 @@ var dispatcher = require('./dispatchers.js')
 
 var table = "emails";
 
-app.post('/sendMail', bodyParser.json(), function (req, res) {
+app.post('/sendEmail', bodyParser.json(), function (req, res) {
 //handle the request
 
 	var emailRequest = {

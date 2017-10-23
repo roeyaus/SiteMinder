@@ -10,7 +10,7 @@ server.startServer(done)
 })
 
 	it('Gets 400 code when no parameters given', function (done) {
-		var Request = unirest.post('localhost:8080/sendMail').header({'Content-Type':'application/json'})
+		var Request = unirest.post('localhost:8080/sendEmail').header({'Content-Type':'application/json'})
 		Request.end((response) => {
 			console.log("ResponseCode:" +  response.code)
 			assert.equal(response.code, 400)

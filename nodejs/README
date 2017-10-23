@@ -32,8 +32,9 @@ How to run :
 
 4) "node index.js" ---> to run the server
 
-Communcation with the server is the same as the Java version
+Communcation with the server : 
 
+HOST_URL:8081/sendEmail <---- Notice port 8081!! to allow coexistance with the Java version on the same server
 
 *** note - my SendGrid account is disabled, I cannot send mails and test.
 *** note #2 - you can only send mails to authorized emails via MailGun!! those are : roeyaus@gmail.com, and roey.lehman@eyesight-tech.com
