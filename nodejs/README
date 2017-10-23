@@ -1,0 +1,14 @@
+So this is version 2 of the SiteMinder email server,
+
+It is similar to the Java version in some ways, but it is easier to implement obviously due to native support of JSON and easier HTTP calls.
+
+Also, it is easier to implement data loss prevention using some kind of Job queue processor.
+After doing a little research, I think that "Bull" is a good framework for that. It is a fast, persistent redis based job queue processor.
+It can run on the same process as the server or in a different process, utilizing more cores of the host machine.
+Redis can be set to be disk-persistent to prevent dataloss in case of machine death.
+
+I did not integrate "Bull" because it also requires installing and configuring redis, which is out of scope of this exercise.
+However, changing my implementation to work with Bull is not difficult, I added the code commented out.
+
+Another way to implement a "task queue" for this particular problem  - use Amazon SQS : each email send request goes into SQS, then handled by a Lambda function that runs the code in "index.js". If it fails all providers, it just inserts the task again into SQS.
+
