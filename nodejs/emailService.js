@@ -89,7 +89,7 @@ app.post('/sendMail', bodyParser.json(), function (req, res) {
 })
 
 exports.startServer = function (callbackDone) {
-	var server = app.listen(8080, function () {
+	var server = app.listen(8081, function () {
    var host = server.address().address
    var port = server.address().port
    console.log("SiteMinder Email server listening at http://%s:%s", host, port)
