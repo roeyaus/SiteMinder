@@ -1,9 +1,12 @@
 So this is version 2 of the SiteMinder email server,
 
 It is similar to the Java version in some ways, but it is easier to implement obviously due to native support of JSON and easier HTTP calls.
+It returns the same error codes as the Java version, see that README for details.
 
-Also, it is easier to implement data loss prevention using some kind of Job queue processor.
-After doing a little research, I think that "Bull" is a good framework for that. It is a fast, persistent redis based job queue processor.
+Contrary to the Java version, it does not have a "retry" thread since threading in node.js is not possible, though background processes are, and so : 
+
+It is easier to implement data loss prevention using some kind of Job queue processor.
+After doing a little research, I think that "Bull" , https://github.com/OptimalBits/bull,  is a good framework for that. It is a fast, persistent redis based job queue processor.
 It can run on the same process as the server or in a different process, utilizing more cores of the host machine.
 Redis can be set to be disk-persistent to prevent dataloss in case of machine death.
 
@@ -11,4 +14,27 @@ I did not integrate "Bull" because it also requires installing and configuring r
 However, changing my implementation to work with Bull is not difficult, I added the code commented out.
 
 Another way to implement a "task queue" for this particular problem  - use Amazon SQS : each email send request goes into SQS, then handled by a Lambda function that runs the code in "index.js". If it fails all providers, it just inserts the task again into SQS.
+
+Packages used : 
+
+Express for HTTP server
+Unirest for HTTP requests
+Mocha and assertion for testing
+Validator for email validation
+
+
+How to run : 
+
+1) "npm install"
+2) . apiKeys.sh   <--- this exports the API keys env variables in your current shell. MUST RUN THIS!
+
+3) "npm test " ---> to run the tests
+
+4) "node index.js" ---> to run the server
+
+Communcation with the server is the same as the Java version
+
+
+*** note - my SendGrid account is disabled, I cannot send mails and test.
+*** note #2 - you can only send mails to authorized emails via MailGun!! those are : roeyaus@gmail.com, and roey.lehman@eyesight-tech.com
 
